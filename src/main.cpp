@@ -105,6 +105,22 @@ void miroir (sil::Image image)
     copyImage.save("output/ex06miroir.png");   
 }
 
+void miroir2(sil::Image logo)
+{
+    sil::Image logo2 {logo};
+    for (int x{0}; x < logo2.width(); ++x)
+    {
+        for (int y {0}; y < logo2.height(); ++y)
+        {
+            float variable2 {logo2.width() - 1.f - x};
+            logo.pixel(x, y).r = logo2.pixel(variable2, y).r;
+            logo.pixel(x, y).b = logo2.pixel(variable2, y).b;
+            logo.pixel(x, y).g = logo2.pixel(variable2, y).g;
+        }
+    }
+        logo.save("output/ex06miroir02.png");
+};
+
 // Exercice 7 : Image bruité
 
 void imageBruit (sil::Image image)
@@ -288,6 +304,64 @@ void rosace(sil::Image image)
 // Exercice 14 : Mosaïque (mosaique1 stylé mais pas voulu)
 
 
+void mosaique2(sil::Image logo)
+{
+    sil::Image logo2 {logo.width()*5, logo.height()*5};
+    for (int x{0}; x < logo.width(); ++x)
+    {
+        for (int y{0}; y < logo.height(); ++y)
+        {
+            for (int i{0}; i < 5; ++i)
+            {
+                logo2.pixel(x+i*logo.width(), y).r = logo.pixel(x, y).r;
+                logo2.pixel(x+i*logo.width(), y).b = logo.pixel(x, y).b;
+                logo2.pixel(x+i*logo.width(), y).g = logo.pixel(x, y).g;
+            }
+        }
+    }
+    
+    for (int x{0}; x < logo2.width(); ++x)
+    {
+        for (int y{0}; y < logo.height(); ++y)
+        {
+            for (int i{0}; i < 5; ++i)
+            {
+                logo2.pixel(x, y+i*logo.height()).r = logo2.pixel(x, y).r;
+                logo2.pixel(x, y+i*logo.height()).b = logo2.pixel(x, y).b;
+                logo2.pixel(x, y+i*logo.height()).g = logo2.pixel(x, y).g;
+            }
+        }
+    }
+    logo2.save("output/ex14mosaique2.png");
+};
+
+// Exercice 15 : Mosaïque miroir
+
+void mosaique_miroir(sil::Image logo)
+{
+    mosaique2(logo);
+    sil::Image logo3 {"output/ex14mosaique2.png"};
+    sil::Image logo4 {logo3};
+
+    for (int x{0}; x < logo3.width(); ++x)
+    {
+        for (int y{0}; y < logo3.height(); ++y)
+        {
+            for (int i{1}; i < 3; ++i)
+            {
+                for (int j{1}; j < 3; ++j)
+                {
+                    float reverse_x {i*logo.width() -1.f -x};
+                    logo3.pixel(x+j*logo.width(), y).r = logo4.pixel(reverse_x, y).r;
+                    logo3.pixel(x+j*logo.width(), y).b = logo4.pixel(reverse_x, y).b;
+                    logo3.pixel(x+j*logo.width(), y).g = logo4.pixel(reverse_x, y).g;
+                }
+            }
+        }
+    }
+    logo4.save("output/ex15MosaiqueMiroir.png");
+}
+
 int main()
 {
     set_random_seed(0);
@@ -308,7 +382,7 @@ int main()
 //    luminosite(photoc);
 //    disque();
 //    cercle(50);
-    rosace(imagefinal);
 //    mosaique2(logo);
+    mosaique_miroir(logo);
     return 0;
 }
