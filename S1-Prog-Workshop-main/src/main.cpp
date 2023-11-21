@@ -1,6 +1,13 @@
 #include <sil/sil.hpp>
 #include <cmath>
+#include <iomanip>
+#include <numbers>
+#include <math.h>
 #include "random.hpp"
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
 
 // Exercice 1 : Ne garder que le vert
 
@@ -277,7 +284,7 @@ void rosace()
                 image.pixel(x,y).r = 1;
                 image.pixel(x,y).b = 1;
             }
-            else if (pow((x-250-95),2)+pow((y-250),2)< pow(100,2) && pow((x-250-95),2)+pow((y-250),2)> pow(100-10,2))
+            else if (pow((x-(std::cos(M_PI/3.0))),2)+pow((y-(std::sin(M_PI/3.0))),2)< pow(100,2) && pow((x-(std::cos(M_PI/3.0))-5),2)+pow((y-(std::sin(M_PI/3.0))-5),2)> pow(100-10,2))
             { //cercle haut gch
                 image.pixel(x,y).g = 1;
                 image.pixel(x,y).r = 1;
