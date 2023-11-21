@@ -294,17 +294,61 @@ void rosace()
         }
     }
     image.save("output/ex13rosace.png");
-}
+};
 
-// Exercice 14 : Mosaïque
+// Exercice 14 : Mosaïque (mosaique1 stylé mais pas voulu)
+
+// void mosaique1(sil::Image logo)
+// {
+//     sil::Image logo2 {logo.width()*5, logo.height()*5};
+//     for (int x{0}; x < logo.width(); ++x)
+//     {
+//         for (int y{0}; y < logo.height(); ++y)
+//         {
+//             for (int i{0}; i < 5; ++i)
+//             {
+//                 for(int j{0}; j < 5; ++j)
+//                 {
+//                     logo2.pixel(x*i, y*j).r = logo.pixel(x, y).r;
+//                     logo2.pixel(x*i, y*j).b = logo.pixel(x, y).b;
+//                     logo2.pixel(x*i, y*j).g = logo.pixel(x, y).g;
+//                 }
+//             }
+//         }
+//     }
+//     logo2.save("output/ex14mosaique.png");
+// };
+
+void mosaique2(sil::Image logo)
+{
+    sil::Image logo2 {logo.width()*5, logo.height()*5};
+    for (int x{0}; x < logo.width(); ++x)
+    {
+        for (int y{0}; y < logo.height(); ++y)
+        {
+            for (int i{0}; i < 5; ++i)
+            {
+                for(int j{0}; j < 5; ++j)
+                {
+                    float pour_x{(x+i*logo.width()+1.f)/x};
+                    float pour_y{(y+j*logo.height()+1.f)/y};
+                    logo2.pixel(x*pour_x, y*pour_y).r = logo.pixel(x, y).r;
+                    logo2.pixel(x*pour_x, y*pour_y).b = logo.pixel(x, y).b;
+                    logo2.pixel(x*pour_x, y*pour_y).g = logo.pixel(x, y).g;
+                }
+            }
+        }
+    }
+    logo2.save("output/ex14mosaique.png");
+};
 
 int main()
 {
-    set_random_seed(0);
+    //set_random_seed(0);
     sil::Image logo{"images/logo.png"};
-    sil::Image photo{"images/photo_faible_contraste.jpg"};
-    sil::Image photoc{"images/photo.jpg"};
-    sil::Image result {345, 300};
+    //sil::Image photo{"images/photo_faible_contraste.jpg"};
+    //sil::Image photoc{"images/photo.jpg"};
+    //sil::Image result {345, 300};
 //    onlyGreen(logo);
 //    blueAndRedReverse(logo);
 //    blackAndWhite(logo);
@@ -317,6 +361,7 @@ int main()
 //    luminosite(photoc);
 //    disque();
 //    cercle(50);
-    rosace();
+    //rosace();
+    mosaique2(logo);
     return 0;
 }
