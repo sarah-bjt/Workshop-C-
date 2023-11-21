@@ -238,34 +238,32 @@ void luminosite (sil::Image image)
 // }
 
 // Exercice 12 : Cercle
-
-// void cercle (int thickness)
-// {
-//     sil::Image image{500/*width*/, 500/*height*/};
-//     for (int x{0}; x < image.width(); x++)
-//     {
-//         for (int y{0}; y < image.height(); y++)
-//         {
-//             if (pow((x-250),2)+pow((y-250),2)< pow(200,2) && pow((x-250),2)+pow((y-250),2)> pow(200-thickness,2) )
-//             {
-//                 image.pixel(x,y).g = 1;
-//                 image.pixel(x,y).r = 1;
-//                 image.pixel(x,y).b = 1;
-//             }
-//         }
-//     }
-//     image.save("output/ex12cercle.png");
-// }
-
+void cercle (int thickness)
+{
+    sil::Image image{500/*width*/, 500/*height*/};
+    for (int x{0}; x < image.width(); x++)
+    {
+        for (int y{0}; y < image.height(); y++)
+        {
+            if (pow((x-250),2)+pow((y-250),2)< pow(200,2) && pow((x-250),2)+pow((y-250),2)> pow(200-thickness,2) )
+            {
+                image.pixel(x,y).g = 1;
+                image.pixel(x,y).r = 1;
+                image.pixel(x,y).b = 1;
+            }
+        }
+    }
+    image.save("output/ex12cercle.png");
+}
 // Exercice 13 : Rosace
 
-void dessineCercle( sil::Image image, float x0 , float y0 , float rayon, float thickness)
+void dessineCercle( sil::Image& image, float x0 , float y0 , float rayon, float thickness)
 {
     for (int x{0}; x < image.width(); x++)
     {
         for (int y{0}; y < image.height() ; y++)
         {
-        if ((image.pixel(x,y).r = 0) && (pow((x-x0),2)+pow((y-y0),2)< pow(rayon,2) && pow((x-x0),2)+pow((y-y0),2)> pow(rayon-thickness,2) ))
+        if (pow((x-x0),2)+pow((y-y0),2)< pow(rayon,2) && pow((x-x0),2)+pow((y-y0),2)> pow(rayon-thickness,2) )
                 { 
                     image.pixel(x,y).g = 1;
                     image.pixel(x,y).r = 1;
@@ -273,98 +271,31 @@ void dessineCercle( sil::Image image, float x0 , float y0 , float rayon, float t
                 }
         }        
     }
-
 }
 
-void rosace()
+void rosace(sil::Image image)
 {
-    sil::Image image{500/*width*/, 500/*height*/};
-    for (int x{0}; x < image.width(); x++)
-    {
-        for (int y{0}; y < image.height(); y++)
-        {
-            dessineCercle (image, 250,250,100,10); //centre
-            dessineCercle (image,250-95,250,100,10); //gch
-            dessineCercle (image,250+95,250,100,10); //dte
-            dessineCercle (image,95*std::cos((2*M_PI)/3.0),95*std::sin((2*M_PI)/3),100,10);
-
-            // else if (pow((x-250+95),2)+pow((y-250),2)< pow(100,2) && pow((x-250+95),2)+pow((y-250),2)> pow(100-10,2))
-            // { //cercle gch
-            //     image.pixel(x,y).g = 1;
-            //     image.pixel(x,y).r = 1;
-            //     image.pixel(x,y).b = 1;
-            // }
-            // else if (pow((x-250-95),2)+pow((y-250),2)< pow(100,2) && pow((x-250-95),2)+pow((y-250),2)> pow(100-10,2))
-            // { //cercle drt
-            //     image.pixel(x,y).g = 1;
-            //     image.pixel(x,y).r = 1;
-            //     image.pixel(x,y).b = 1;
-            // }
-            // else if (pow((x-(95*(std::cos(M_PI/3.0)))),2)+pow((y-95*(std::sin(M_PI/3.0))),2)< pow(100,2) && pow((x-95*(std::cos(M_PI/3.0))-5),2)+pow((y-95*(std::sin(M_PI/3.0))-5),2)> pow(100-10,2))
-            // { //cercle haut gch
-            //     image.pixel(x,y).g = 1;
-            //     image.pixel(x,y).r = 1;
-            //     image.pixel(x,y).b = 1;
-            // }
-
-        }
-    }
+    dessineCercle (image, 250,250,100,10); //centre
+    dessineCercle (image,250-95,250,100,10); //gch
+    dessineCercle (image,250+95,250,100,10); //dte
+    dessineCercle (image,250 +95*std::cos((2*M_PI)/3.0),250 +95*std::sin((2*M_PI)/3),100,10); 
+    dessineCercle (image,250 +95*std::cos((M_PI)/3.0),250 +95*std::sin((M_PI)/3),100,10); 
+    dessineCercle (image,250 +95*std::cos((4*M_PI)/3.0),250 +95*std::sin((4*M_PI)/3),100,10); 
+    dessineCercle (image,250 +95*std::cos((5*M_PI)/3.0),250 +95*std::sin((5*M_PI)/3),100,10); 
     image.save("output/ex13rosace.png");
-};
+}
 
 // Exercice 14 : Mosaïque (mosaique1 stylé mais pas voulu)
 
-// void mosaique1(sil::Image logo)
-// {
-//     sil::Image logo2 {logo.width()*5, logo.height()*5};
-//     for (int x{0}; x < logo.width(); ++x)
-//     {
-//         for (int y{0}; y < logo.height(); ++y)
-//         {
-//             for (int i{0}; i < 5; ++i)
-//             {
-//                 for(int j{0}; j < 5; ++j)
-//                 {
-//                     logo2.pixel(x*i, y*j).r = logo.pixel(x, y).r;
-//                     logo2.pixel(x*i, y*j).b = logo.pixel(x, y).b;
-//                     logo2.pixel(x*i, y*j).g = logo.pixel(x, y).g;
-//                 }
-//             }
-//         }
-//     }
-//     logo2.save("output/ex14mosaique.png");
-// };
-
-// void mosaique2(sil::Image logo)
-// {
-//     sil::Image logo2 {logo.width()*5, logo.height()*5};
-//     for (int x{0}; x < logo.width(); ++x)
-//     {
-//         for (int y{0}; y < logo.height(); ++y)
-//         {
-//             for (int i{0}; i < 5; ++i)
-//             {
-//                 for(int j{0}; j < 5; ++j)
-//                 {
-//                     float pour_x{(x+i*logo.width()+1.f)/x};
-//                     float pour_y{(y+j*logo.height()+1.f)/y};
-//                     logo2.pixel(x*pour_x, y*pour_y).r = logo.pixel(x, y).r;
-//                     logo2.pixel(x*pour_x, y*pour_y).b = logo.pixel(x, y).b;
-//                     logo2.pixel(x*pour_x, y*pour_y).g = logo.pixel(x, y).g;
-//                 }
-//             }
-//         }
-//     }
-//     logo2.save("output/ex14mosaique.png");
-// };
 
 int main()
 {
-    //set_random_seed(0);
+    set_random_seed(0);
     sil::Image logo{"images/logo.png"};
-    //sil::Image photo{"images/photo_faible_contraste.jpg"};
-    //sil::Image photoc{"images/photo.jpg"};
-    //sil::Image result {345, 300};
+    sil::Image imagefinal{500/*width*/, 500/*height*/};
+    sil::Image photo{"images/photo_faible_contraste.jpg"};
+    sil::Image photoc{"images/photo.jpg"};
+    sil::Image result {345, 300};
 //    onlyGreen(logo);
 //    blueAndRedReverse(logo);
 //    blackAndWhite(logo);
@@ -377,8 +308,7 @@ int main()
 //    luminosite(photoc);
 //    disque();
 //    cercle(50);
-    rosace();
+    rosace(imagefinal);
 //    mosaique2(logo);
     return 0;
 }
-//////grherieigtrrtgihrgth
