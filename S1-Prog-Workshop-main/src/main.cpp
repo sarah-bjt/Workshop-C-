@@ -2,6 +2,8 @@
 #include <cmath>
 #include "random.hpp"
 
+// Exercice 1 : Ne garder que le vert
+
 void onlyGreen (sil::Image image)
 {
     for (glm::vec3& color : image.pixels())
@@ -12,6 +14,7 @@ void onlyGreen (sil::Image image)
     image.save("output/ex01onlyGreen.png");
 }
 
+// Exercice 2 : Echanger les canaux
 
 void blueAndRedReverse (sil::Image image)
 {
@@ -23,6 +26,17 @@ void blueAndRedReverse (sil::Image image)
     }
     image.save("output/ex02blueAndRedReverse.png");    
 }
+
+void canaux(sil::Image logo)
+{
+    for(glm::vec3& color : logo.pixels())
+    {
+        std::swap(color.r, color.b);
+    }
+        logo.save("output/canaux.png");
+};
+
+// Exercice 3 : Noir & Blanc
 
 void blackAndWhite (sil::Image image)
 {
@@ -36,6 +50,8 @@ void blackAndWhite (sil::Image image)
     image.save("output/ex03blackAndWhite.png");
 }
 
+// Exercice 4 : Négatif
+
 void inverteColor (sil::Image image)
 {
     for (glm::vec3& color : image.pixels())
@@ -46,6 +62,8 @@ void inverteColor (sil::Image image)
     }
     image.save("output/ex04inverteColor.png");    
 }
+
+// Exercice 5 : Dégradé
 
 void degrader ()
 {
@@ -63,6 +81,8 @@ void degrader ()
     image.save("output/ex05degrader.png");    
 }
 
+// Exercice 6 : Miroir
+
 void miroir (sil::Image image)
 {
     sil::Image copyImage {image.width(), image.height()};
@@ -77,6 +97,8 @@ void miroir (sil::Image image)
     }
     copyImage.save("output/ex06miroir.png");   
 }
+
+// Exercice 7 : Image bruité
 
 void imageBruit (sil::Image image)
 {
@@ -93,6 +115,23 @@ void imageBruit (sil::Image image)
     image.save("output/ex07imageBruit.png");    
 }
 
+void bruite(sil::Image logo)
+{
+    int i {0};
+    while(i < 200)
+    {
+        int x {random_int(0, logo.width()+1)};
+        int y {random_int(0, logo.height()+1)};
+        logo.pixel(x, y).r = random_float(0,1);
+        logo.pixel(x, y).b = random_float(0,1);
+        logo.pixel(x, y).g = random_float(0,1);
+        i ++;
+    }
+        logo.save("output/bruite.png");
+};
+
+// Exercice 8 : Rotation de 90°
+
 void rotation90 (sil::Image image, sil::Image result) // attention ne fonctionne pas 
 {
     for (int x{0}; x < result.width(); x++)
@@ -104,6 +143,9 @@ void rotation90 (sil::Image image, sil::Image result) // attention ne fonctionne
     }
     result.save("output/ex08rotation90.png");
 }
+
+// Exercice 9 : RGB split
+
 
 // void RGBsplit (sil::Image image) // effet arlequin
 // {
@@ -152,6 +194,8 @@ void RGBsplit (sil::Image image)
     copy.save("output/ex09RGBsplit.png");
 }
 
+// Exercice 10 : Luminosité
+
 void luminosite (sil::Image image)
 {
 
@@ -165,6 +209,8 @@ void luminosite (sil::Image image)
     }
     image.save("output/ex10luminosite.png");
 }
+
+// Exercice 11 : Disque
 
 void disque ()
 {
@@ -184,6 +230,7 @@ void disque ()
     image.save("output/ex11disque.png");
 }
 
+// Exercice 12 : Cercle
 
 void cercle (int thickness)
 {
@@ -202,6 +249,8 @@ void cercle (int thickness)
     }
     image.save("output/ex12cercle.png");
 }
+
+// Exercice 13 : Rosace
 
 void rosace()
 {
@@ -239,6 +288,9 @@ void rosace()
     }
     image.save("output/ex13rosace.png");
 }
+
+// Exercice 14 : Mosaïque
+
 int main()
 {
     set_random_seed(0);
