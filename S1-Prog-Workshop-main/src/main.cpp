@@ -359,6 +359,33 @@ void mosaique2(sil::Image logo)
     logo2.save("output/ex14mosaique2.png");
 };
 
+// Exercice 15 : Mosaïque miroir
+
+void mosaique_miroir(sil::Image logo)
+{
+    mosaique2(logo);
+    sil::Image logo3 {"output/ex14mosaique2.png"};
+    sil::Image logo4 {logo3};
+
+    for (int x{0}; x < logo3.width(); ++x)
+    {
+        for (int y{0}; y < logo3.height(); ++y)
+        {
+            for (int i{1}; i < 3; ++i)
+            {
+                for (int j{1}; j < 3; ++j)
+                {
+                    float reverse_x {i*logo.width() -1.f -x};
+                    logo3.pixel(x+j*logo.width(), y).r = logo4.pixel(reverse_x, y).r;
+                    logo3.pixel(x+j*logo.width(), y).b = logo4.pixel(reverse_x, y).b;
+                    logo3.pixel(x+j*logo.width(), y).g = logo4.pixel(reverse_x, y).g;
+                }
+            }
+        }
+    }
+    logo4.save("output/ex15MosaiqueMiroir.png");
+}
+
 int main()
 {
     //set_random_seed(0);
@@ -379,6 +406,6 @@ int main()
 //    disque();
 //    cercle(50);
     //rosace();
-    mosaique2(logo);
+    mosaique_miroir(logo);
     return 0;
 }
