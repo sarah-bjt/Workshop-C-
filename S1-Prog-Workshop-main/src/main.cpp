@@ -98,6 +98,22 @@ void miroir (sil::Image image)
     copyImage.save("output/ex06miroir.png");   
 }
 
+void miroir2(sil::Image logo)
+{
+    sil::Image logo2 {logo};
+    for (int x{0}; x < logo2.width(); ++x)
+    {
+        for (int y {0}; y < logo2.height(); ++y)
+        {
+            float variable2 {logo2.width() - 1.f - x};
+            logo.pixel(x, y).r = logo2.pixel(variable2, y).r;
+            logo.pixel(x, y).b = logo2.pixel(variable2, y).b;
+            logo.pixel(x, y).g = logo2.pixel(variable2, y).g;
+        }
+    }
+        logo.save("output/ex06miroir02.png");
+};
+
 // Exercice 7 : Image bruité
 
 void imageBruit (sil::Image image)
@@ -321,18 +337,26 @@ void mosaique2(sil::Image logo)
         {
             for (int i{0}; i < 5; ++i)
             {
-                for(int j{0}; j < 5; ++j)
-                {
-                    float pour_x{(x+i*logo.width()+1.f)/x};
-                    float pour_y{(y+j*logo.height()+1.f)/y};
-                    logo2.pixel(x*pour_x, y*pour_y).r = logo.pixel(x, y).r;
-                    logo2.pixel(x*pour_x, y*pour_y).b = logo.pixel(x, y).b;
-                    logo2.pixel(x*pour_x, y*pour_y).g = logo.pixel(x, y).g;
-                }
+                logo2.pixel(x+i*logo.width(), y).r = logo.pixel(x, y).r;
+                logo2.pixel(x+i*logo.width(), y).b = logo.pixel(x, y).b;
+                logo2.pixel(x+i*logo.width(), y).g = logo.pixel(x, y).g;
             }
         }
     }
-    logo2.save("output/ex14mosaique.png");
+    
+    for (int x{0}; x < logo2.width(); ++x)
+    {
+        for (int y{0}; y < logo.height(); ++y)
+        {
+            for (int i{0}; i < 5; ++i)
+            {
+                logo2.pixel(x, y+i*logo.height()).r = logo2.pixel(x, y).r;
+                logo2.pixel(x, y+i*logo.height()).b = logo2.pixel(x, y).b;
+                logo2.pixel(x, y+i*logo.height()).g = logo2.pixel(x, y).g;
+            }
+        }
+    }
+    logo2.save("output/ex14mosaique2.png");
 };
 
 int main()
